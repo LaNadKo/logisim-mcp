@@ -1,0 +1,5 @@
+{
+  "workspace": "workspace",
+  "state_dir": ".state",
+  "logisim": "vendor/logisim-2.7.1.jar"
+}

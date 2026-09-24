@@ -1,0 +1,9 @@
+{
+  "version": "2.7.1",
+  "upstream": "https://sourceforge.net/projects/circuit/files/2.7.x/2.7.1/",
+  "license": "GPL-2.0-or-later",
+  "origin": "Unmodified ZIP entries from official logisim-win-2.7.1.exe, repacked without the Windows launcher stub",
+  "origin_sha256": "bbe7f139a2239d298036b735cd8b9fd28fe83a2853a491c347e34c8051752881",
+  "jar_sha256": "0295e1b7efa80794a23a6b03187223410f8890e61838f9bd53ad494c0da821f0",
+  "source": "src/ within the jar"
+}
