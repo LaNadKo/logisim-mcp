@@ -1,0 +1,10 @@
+e53a79c3c3d86865bd7e787903884331068e71321714ffd44f145785affc7cb0 runtime-archives/windows-x64/OpenJDK17U-jdk_x64_windows_hotspot_17.0.20.1_1.zip
+63d263ab0162f34a241a56dc5b283c22d6e131f5516117e6a921350c69ba7d4f runtime-archives/windows-x64/cpython-3.13.15+20260901-x86_64-pc-windows-msvc-install_only_stripped.tar.gz
+3808d1d15e3ec6bd5b84057fb5d84c33d8a1536a258146bcea2e603fc726e08e runtime-archives/linux-x64/OpenJDK17U-jdk_x64_linux_hotspot_17.0.20.1_1.tar.gz
+8a689a077337bea6d1c4bc0b7df1d52fcaa28f5f67e50df8bf417c1e3f9d8874 runtime-archives/linux-x64/cpython-3.13.15+20260901-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz
+457b57af8f9c93ec39080bb8c764f559dc8c89a6da1a39d718a400b7890d3e41 runtime-archives/linux-arm64/OpenJDK17U-jdk_aarch64_linux_hotspot_17.0.20.1_1.tar.gz
+01ce0ce9189feaead3298abf10d4efe998c55a489b3d5d38ca4f83dda7e7977e runtime-archives/linux-arm64/cpython-3.13.15+20260901-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz
+c01975da12ed4235250ff891fe8bba73a9e73037d444b269c9d0922b5dbc8e0a runtime-archives/macos-x64/OpenJDK17U-jdk_x64_mac_hotspot_17.0.20.1_1.tar.gz
+f712a9143c8a5d248438ec7921a0b48d548bca4f1337d33c690d28c2d0504137 runtime-archives/macos-x64/cpython-3.13.15+20260901-x86_64-apple-darwin-install_only_stripped.tar.gz
+196d13ba5f10414bef7f6a05a9b3f00edacb18ebacef2b99485db9e2ee18f0e8 runtime-archives/macos-arm64/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.20.1_1.tar.gz
+d3904bd6a072246e07aa0bdadee9a14e80521e42a943c0848059feb16a2816dc runtime-archives/macos-arm64/cpython-3.13.15+20260901-aarch64-apple-darwin-install_only_stripped.tar.gz

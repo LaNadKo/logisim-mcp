@@ -1,0 +1,1680 @@
+[
+  {
+    "name": "projects",
+    "description": "List live projects with unambiguous session refs",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "project_new",
+    "description": "Create a new live project using the current template",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "project_open",
+    "description": "Open a workspace .circ project without replacing existing projects",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "project_close",
+    "description": "Close a live project window. Refuses unsaved changes unless discard_changes=true; refuses the last project to avoid exiting the runtime.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "discard_changes": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "native_roots",
+    "description": "Get typed refs to project, circuit, simulator, appearance, options and canvas",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "catalog_full",
+    "description": "Every loaded component and editor tool, all native default attributes and handles",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "circuit_snapshot",
+    "description": "Read components, exact ports, net values, wires and width conflicts",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "component_inspect",
+    "description": "Inspect one component by stable session ref or Factory@x,y id",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "circuit_edit",
+    "description": "One undoable batch: add component; wire points; remove_wire exact from/to; remove; attribute key/value; move/duplicate x/y. Validate whole batch before applying. Move does not reroute wires.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "actions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1000,
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "add",
+                  "wire",
+                  "remove_wire",
+                  "remove",
+                  "attribute",
+                  "move",
+                  "duplicate"
+                ]
+              },
+              "library": {
+                "type": "string"
+              },
+              "component": {
+                "type": "string"
+              },
+              "x": {
+                "type": "integer"
+              },
+              "y": {
+                "type": "integer"
+              },
+              "attributes": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "points": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              },
+              "from": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "to": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "id": {
+                "type": "string"
+              },
+              "key": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "project",
+        "actions"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "pins_read_write",
+    "description": "Read all pins, or set input values (unsigned integer or exact-width 01xE string). Supports 1..32 bits; propagates and repaints.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "values": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "net_probe",
+    "description": "Read simulated value at a wire/port coordinate",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "project",
+        "x",
+        "y"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "circuit_manage",
+    "description": "List/add/select/remove/reorder/set-main circuit or set circuit attribute. Removal refuses used/last circuit.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "list",
+            "add",
+            "select",
+            "remove",
+            "move",
+            "main",
+            "attribute"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "index": {
+          "type": "integer"
+        },
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project",
+        "action"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "project_save",
+    "description": "Save workspace .circ. Existing destination requires overwrite=true and is backed up first.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "overwrite": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "project",
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "analyzer_create",
+    "description": "Create native combinational analyzer, up to 8 one-bit inputs and outputs",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "project",
+        "inputs",
+        "outputs"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "analyzer_capture",
+    "description": "Derive truth table and expressions from current combinational circuit; unsuitable for sequential circuits",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "derive_expression": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "analyzer_set_expression",
+    "description": "Parse native Boolean syntax for one output (AND, OR, XOR, NOT or symbolic equivalents)",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "analyzer": {
+          "type": "string"
+        },
+        "output": {
+          "type": "string"
+        },
+        "expression": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project",
+        "analyzer",
+        "output",
+        "expression"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "analyzer_set_table",
+    "description": "Set complete output truth-table columns, row order binary ascending; accepts 0,1,x",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "analyzer": {
+          "type": "string"
+        },
+        "columns": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1",
+                "x"
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "project",
+        "analyzer",
+        "columns"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "analyzer_minimize",
+    "description": "Native SOP/POS minimization with optional application to output expressions. Use when requested or required by the assignment; do not infer permission for a compact implementation. Follow logisim://guidance/agents.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "analyzer": {
+          "type": "string"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "sop",
+            "pos"
+          ]
+        },
+        "apply": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "project",
+        "analyzer",
+        "format"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "analyzer_read",
+    "description": "Read analyzer expressions, minimized forms and full truth table",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "analyzer": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project",
+        "analyzer"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "analyzer_build",
+    "description": "Native automatic circuit generation into a new circuit; optional two-input and NAND-only gates. Preserve the requested full structure and basis; no unrequested compact alternative. Check generated structure against the assignment. Follow logisim://guidance/agents. NAND-only cannot directly synthesize XOR expressions.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "analyzer": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "two_input": {
+          "type": "boolean"
+        },
+        "nand_only": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "project",
+        "analyzer",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "memory_read_write",
+    "description": "Read/write RAM state or ROM contents, 0-based addresses, unsigned words. Runtime RAM values are not stored in .circ; use export. ROM writes change project.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "read",
+            "write"
+          ]
+        },
+        "start": {
+          "type": "integer"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65536
+        },
+        "values": {
+          "type": "array",
+          "maxItems": 65536,
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        }
+      },
+      "required": [
+        "project",
+        "id",
+        "action"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "circuit_export",
+    "description": "Export native circuit drawing to PNG/GIF/JPEG; state colors, printer view and scale options",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "png",
+            "gif",
+            "jpg"
+          ]
+        },
+        "scale": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 8
+        },
+        "show_state": {
+          "type": "boolean"
+        },
+        "printer_view": {
+          "type": "boolean"
+        },
+        "overwrite": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "project",
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "project_options",
+    "description": "Read all native simulation options or set one native attribute",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "library_manage",
+    "description": "Load .circ or JAR library from workspace, reload loaded library, or unload unused library. JAR class_name is required for extension libraries.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "load",
+            "reload",
+            "unload"
+          ]
+        },
+        "path": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "class_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project",
+        "action"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "simulation_substate",
+    "description": "Enter live subcircuit instance state or return to parent simulation state",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "enter",
+            "parent"
+          ]
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project",
+        "action"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "menu_inventory",
+    "description": "Enumerate complete actual native application menu tree, enabled state and item handles",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "menu_action",
+    "description": "Queue a previously discovered native menu action. Can open modal UI, print, save or close; observe completion separately. Does not imply external submission approval.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "item": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project",
+        "item"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "log_create",
+    "description": "Create native signal logging model for the current simulation state",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "log_select",
+    "description": "Add components to native logger; RAM accepts address option. Discover supported logging types in manual.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "log": {
+          "type": "string"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "option": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "project",
+        "log",
+        "components"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "log_sample",
+    "description": "Sample native selected log signals after propagation",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "log": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project",
+        "log"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "log_file",
+    "description": "Configure native logger output file/header/enabled; new workspace path only. Uses the active application logging model for continuous transitions.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "log": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "header": {
+          "type": "boolean"
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "project",
+        "log",
+        "enabled"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "api_describe",
+    "description": "Discover constructors, methods and fields for a native com.cburch class or handle, including package-private APIs. Filter methods by substring. Discovery does not prove behavioral coverage.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "class": {
+          "type": "string"
+        },
+        "ref": {
+          "type": "string"
+        },
+        "filter": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "api_invoke",
+    "description": "Invoke an EXACT signature previously discovered by api_describe. Args: primitive, arrays/lists, workspace File path or {ref:handle}. Mutations may bypass undo; inspect documentation first.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "ref": {
+          "type": "string"
+        },
+        "args": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "api_construct",
+    "description": "Construct a native object using exact discovered constructor signature; object returned as session ref",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "args": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "api_field",
+    "description": "Read exact previously discovered native field, returning primitive or object ref",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "string"
+        },
+        "ref": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "field"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "api_items",
+    "description": "Paginate arrays, lists, sets or maps returned by native methods",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string"
+        },
+        "offset": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        }
+      },
+      "required": [
+        "ref"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "api_release",
+    "description": "Release session object refs no longer needed",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "refs"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "api_field_set",
+    "description": "Set a previously discovered non-final native field. Advanced escape hatch; may bypass undo and propagation. Use typed tools when available.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "string"
+        },
+        "ref": {
+          "type": "string"
+        },
+        "value": {}
+      },
+      "required": [
+        "field",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "native_windows",
+    "description": "Read Swing window/dialog trees for this Logisim JVM, including actual controls and handles",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "depth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "native_widget",
+    "description": "Operate a discovered native Logisim widget: click button, set text, select combo/tab/list, set spinner, front window. Click is queued; observe results with native_windows.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "click",
+            "text",
+            "select",
+            "spinner",
+            "front"
+          ]
+        },
+        "value": {},
+        "index": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "ref",
+        "action"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "simulation_ticks",
+    "description": "Synchronously execute a fixed number of clock ticks and settle after each; automatic ticking must be disabled",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "simulation_control",
+    "description": "Native simulation status/run/pause, tick, step, reset, automatic ticking and frequency. step/reset are asynchronous; poll status or propagate before dependent reads.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "status",
+            "propagate",
+            "tick",
+            "step",
+            "reset",
+            "run",
+            "pause",
+            "ticks_on",
+            "ticks_off",
+            "frequency"
+          ]
+        },
+        "hz": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 4096
+        }
+      },
+      "required": [
+        "project",
+        "action"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "circuit_undo",
+    "description": "Undo the latest file-affecting project action; simulated values are not undoable",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "circuit_statistics",
+    "description": "Read native simple, unique and recursive component statistics",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "project"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "selection_edit",
+    "description": "Native selection and clipboard: select components, copy/cut/paste/drop/duplicate/delete/move, or read. Paste remains floating until move/drop.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "read",
+            "select",
+            "copy",
+            "cut",
+            "paste",
+            "drop",
+            "duplicate",
+            "delete",
+            "move"
+          ]
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dx": {
+          "type": "integer"
+        },
+        "dy": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "project",
+        "action"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "application_preferences",
+    "description": "Read all native preference monitors or set one exact key with its correct value type; settings persist in Logisim",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "value": {}
+      },
+      "required": [
+        "project"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "memory_export_hex",
+    "description": "Export RAM/ROM range as native v2.0 raw hexadecimal file; does not overwrite",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "start": {
+          "type": "integer"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536
+        }
+      },
+      "required": [
+        "project",
+        "id",
+        "path",
+        "count"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "memory_import_hex",
+    "description": "Load native v2.0 raw hex data (including count*word runs) into RAM/ROM; validate full file first",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "start": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "project",
+        "id",
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "api_classes",
+    "description": "Search all 610 packaged top-level com.cburch classes for API discovery",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "offset": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "manual_search",
+    "description": "Search all 129 bundled English manual pages, including all libraries and menus",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "manual_read",
+    "description": "Read one exact bundled manual page returned by manual_search",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "source_search",
+    "description": "Search actual Java source bundled in this exact Logisim executable; returns source paths and matching line numbers",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "path_contains": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "source_read",
+    "description": "Read a bounded line range from a bundled Java source path returned by source_search",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "cli_verify",
+    "description": "Run classic Logisim headless verification with bounded timeout. Supports table/halt/speed/stats/tty, RAM -load, library -sub and keyboard stdin. Needs a self-terminating harness with halt output for normal completion.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "formats": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "table",
+              "halt",
+              "speed",
+              "stats",
+              "tty"
+            ]
+          }
+        },
+        "load_image": {
+          "type": "string"
+        },
+        "substitutions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "string"
+              },
+              "to": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "from",
+              "to"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "stdin": {
+          "type": "string"
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  }
+]
